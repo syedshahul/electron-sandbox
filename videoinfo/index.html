@@ -1,32 +1,39 @@
 <html>
+
 <head>
   <title>Videinfo</title>
 </head>
+
 <body>
   <h1>Videinfo</h1>
   <form>
     <div>
       <label>Upload a video</lable>
-        <input type="file" accept="video/*"/>
+        <input type="file" accept="video/*" />
     </div>
     <button type="submit">Get info</button>
   </form>
 
-<h1 id="duration-result"> </h1>
+  <h1 id="duration-result"> </h1>
 
   <script>
-  const electron=require('electron');
-  const{ipcRenderer}=electron;
+    const electron = require('electron');
+    const {
+      ipcRenderer
+    } = electron;
 
-  document.querySelector('form').addEventListener('submit',(event) =>{
-    event.preventDefault();
-    const {path } = document.querySelector('input').files[0];
-ipcRenderer.send('video:submit', path);
-  });
+    document.querySelector('form').addEventListener('submit', (event) => {
+      event.preventDefault();
+      const {
+        path
+      } = document.querySelector('input').files[0];
+      ipcRenderer.send('video:submit', path);
+    });
 
-ipcRenderer.on('video:metadata',(event, duration)=>{
-  document.querySelector('#duration-result').innerHTML = `Video duration is ${duration} seconds`;
-});
+    ipcRenderer.on('video:metadata', (event, duration) => {
+      document.querySelector('#duration-result').innerHTML = `Video duration is ${duration} seconds`;
+    });
   </script>
 </body>
+
 </html>

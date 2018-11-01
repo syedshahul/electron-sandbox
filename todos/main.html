@@ -1,0 +1,28 @@
+<html>
+
+<head></head>
+
+<body>
+  <h1 style="color:blue">To Dos</h1>
+  <ul>
+
+  </ul>
+</body>
+<script>
+  const electron = require('electron');
+  const {
+    ipcRenderer
+  } = electron;
+  const todolist = document.querySelector('ul');
+  ipcRenderer.on('todo:add', (event, todo) => {
+    const li = document.createElement('li');
+    const text = document.createTextNode(todo);
+    li.appendChild(text);
+    todolist.appendChild(li);
+  });
+  ipcRenderer.on('todo:clearlist', () => {
+    todolist.innerHTML = "";
+  })
+</script>
+
+</html>

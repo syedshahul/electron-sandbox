@@ -3,12 +3,19 @@ const ffmpeg = require('fluent-ffmpeg');
 // const app = electron.app
 //
 // const BrowserWindow = electron.BrowserWindow
-const {app, BrowserWindow, ipcMain} = electron
+const {
+  app,
+  BrowserWindow,
+  ipcMain
+} = electron
 
 let mainWindow
 
 function createWindow() {
-  mainWindow = new BrowserWindow({width: 800, height: 600})
+  mainWindow = new BrowserWindow({
+    width: 800,
+    height: 600
+  })
 
   mainWindow.loadURL(`file://${__dirname}/index.html`)
 
@@ -33,10 +40,10 @@ app.on('activate', function() {
   }
 })
 
-ipcMain.on('video:submit',(event, path)=>{
+ipcMain.on('video:submit', (event, path) => {
   console.log(path);
-ffmpeg.ffprobe(path,(err, metadata) =>{
-  // console.log("Video duration is: ",metadata.format.duration);
-  mainWindow.webContents.send('video:metadata', metadata.format.duration);
-});
+  ffmpeg.ffprobe(path, (err, metadata) => {
+    // console.log("Video duration is: ",metadata.format.duration);
+    mainWindow.webContents.send('video:metadata', metadata.format.duration);
+  });
 });
